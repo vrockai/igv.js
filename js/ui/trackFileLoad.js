@@ -53,7 +53,7 @@ var igv = (function (igv) {
         this.$label.append($e);
 
         $e = $('<span class="box__dragndrop">');
-        $e.text(' or drag it here');
+        $e.text(' or drop it here');
         this.$label.append($e);
 
         // feedback when track is selected
@@ -64,13 +64,6 @@ var igv = (function (igv) {
         this.$button.text('Load Track');
         this.$button.hide();
 
-        $url_input_container = $('<div class="igv-drag-and-drop-url-input-container">');
-        $e = $('<div>');
-        $e.text('or');
-        this.$url_input = $('<input class="igv-drag-and-drop-url-input" placeholder="enter track URL">');
-        $url_input_container.append($e);
-        $url_input_container.append(this.$url_input);
-
         $box_input = $('<div class="box__input">');
         $box_input.append($fa_container);
 
@@ -79,12 +72,20 @@ var igv = (function (igv) {
         $box_input.append(this.$label);
         $box_input.append(this.$chosenTrackLabel);
 
-        $box_input.append($url_input_container);
-
         $box_input.append(this.$button);
 
         $box = $('<div class="js igv-drag-and-drop-box">');
         $box.append($box_input);
+
+        // Enter URL
+        $url_input_container = $('<div class="igv-drag-and-drop-url-input-container">');
+        $e = $('<div>');
+        $e.text('or');
+        this.$url_input = $('<input class="igv-drag-and-drop-url-input" placeholder="enter track URL">');
+        $url_input_container.append($e);
+        $url_input_container.append(this.$url_input);
+
+        $box.append($url_input_container);
 
         this.$container = $('<div class="igv-drag-and-drop-container">');
         this.$container.append($box);
