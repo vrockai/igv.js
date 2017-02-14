@@ -40,13 +40,15 @@ var igv = (function (igv) {
             $url_input_container,
             $e;
 
+        // file load icon
         $fa_container = $('<div class="fa-container">');
         $fa = $('<i class="fa fa-upload fa-3x" aria-hidden="true">');
         $fa_container.append($fa);
 
+        // file ingestion input
         $input = $('<input type="file" name="files[]" id="file" class="box__file" data-multiple-caption="{count} files selected" multiple="">');
 
-        // affords selecting or drabbing track file
+        // afford selecting/drag-dropping track file
         this.$label = $('<label for="file">');
         $e = $('<strong>');
         $e.text('Choose a track file');
@@ -56,25 +58,24 @@ var igv = (function (igv) {
         $e.text(' or drop it here');
         this.$label.append($e);
 
-        // feedback when track is selected
+        // selected track visual feedback
         this.$chosenTrackLabel = $('<label for="file">');
         this.$chosenTrackLabel.hide();
 
-        this.$button = $('<button type="button" class="box__button">');
-        this.$button.text('Load Track');
-        this.$button.hide();
-
         $box_input = $('<div class="box__input">');
         $box_input.append($fa_container);
-
         $box_input.append($input);
-
         $box_input.append(this.$label);
         $box_input.append(this.$chosenTrackLabel);
 
+        // load selected track button
+        this.$button = $('<button type="button" class="box__button">');
+        this.$button.text('Load Track');
+        this.$button.hide();
         $box_input.append(this.$button);
 
         $box = $('<div class="js igv-drag-and-drop-box">');
+
         $box.append($box_input);
 
         // Enter URL
@@ -88,7 +89,9 @@ var igv = (function (igv) {
         $box.append($url_input_container);
 
         this.$container = $('<div class="igv-drag-and-drop-container">');
+
         this.$container.append($box);
+
         this.$container.append( closeHandler() );
 
         function closeHandler() {
@@ -133,22 +136,26 @@ var igv = (function (igv) {
         var self = this,
             $drag_and_drop,
             $input,
-            droppedFiles = undefined;
+            droppedFile = undefined;
 
         $drag_and_drop = this.$container.find('.igv-drag-and-drop-box');
 
         $input = $drag_and_drop.find( 'input[type="file"]' );
         $input.on( 'change', function( e ) {
 
-            droppedFiles = e.target.files;
-            presentFileName( droppedFiles );
+            droppedFile = _.first(e.target.files);
+
+            // presentFileName(droppedFile);
+
+            dismissDragAndDrop(self);
+            igv.browser.loadTracksWithConfigList( [ { url: droppedFile } ] );
+
         });
 
         this.$button.on( 'click', function( e ) {
-            var file = _.first(droppedFiles);
 
             dismissDragAndDrop(self);
-            igv.browser.loadTracksWithConfigList( [ { url: file } ] );
+            igv.browser.loadTracksWithConfigList( [ { url: droppedFile } ] );
 
         });
 
@@ -172,8 +179,13 @@ var igv = (function (igv) {
                 $drag_and_drop.removeClass( 'is-dragover' );
             })
             .on( 'drop', function( e ) {
-                droppedFiles = e.originalEvent.dataTransfer.files; // the files that were dropped
-                presentFileName( droppedFiles );
+                droppedFile = _.first(e.originalEvent.dataTransfer.files);
+
+                // presentFileName(droppedFile);
+
+                dismissDragAndDrop(self);
+                igv.browser.loadTracksWithConfigList( [ { url: droppedFile } ] );
+
             });
 
 
@@ -190,21 +202,15 @@ var igv = (function (igv) {
 
         });
 
-        function presentFileName( files ) {
+        function presentFileName(file) {
 
             var str;
 
-            if (_.size(files) > 1) {
-                str = ( $input.attr( 'data-multiple-caption' ) || '' ).replace( '{count}', files.length );
-            } else {
-                str = _.first(files).name;
-            }
-
             self.$label.hide();
-            self.$chosenTrackLabel.text(str);
+            self.$chosenTrackLabel.text( file.name );
             self.$chosenTrackLabel.show();
 
-            str = 'Load ' + str;
+            str = 'Load ' + file.name;
             self.$button.text(str);
             self.$button.show();
 

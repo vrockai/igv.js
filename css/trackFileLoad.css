@@ -59,10 +59,6 @@
 	color: #92b0b3;
 }
 
-.igv-drag-and-drop-url-input:hover {
-	border-bottom: 2px solid #36464b;
-}
-
 .igv-drag-and-drop-box {
     position: relative;
 
@@ -108,9 +104,16 @@
 
 	border: 0;
 	outline: 0;
-	border-bottom: 2px solid #92b0b3;
+	/*border-bottom: 2px solid #92b0b3;*/
+	border-bottom: 2px solid #36464b;
 
 	background: transparent;
+}
+
+.igv-drag-and-drop-url-input:hover {
+	/*border-bottom: 2px solid #39bfd3;*/
+	background: white;
+	border-bottom: 2px solid transparent;
 }
 
 .igv-drag-and-drop-box.is-dragover {

@@ -19,6 +19,7 @@ var igv = (function (igv) {
 
         var self = this,
             description,
+            trackName,
             $trackLabel,
             $spinner,
             dimen;
@@ -95,10 +96,12 @@ var igv = (function (igv) {
 
         if (trackView.track.name && 0 === this.genomicState.locusIndex) {
 
-            description = trackView.track.description || trackView.track.name;
+            trackName = _.last( trackView.track.name.split('/') );
+            description = trackView.track.description || trackName;
+
             $trackLabel = $('<div class="igv-track-label">');
 
-            $trackLabel.html(trackView.track.name);
+            $trackLabel.html(trackName);
 
             $trackLabel.click(function (e) {
                 igv.popover.presentContent(e.pageX, e.pageY, description);
