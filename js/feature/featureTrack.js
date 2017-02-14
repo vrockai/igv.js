@@ -45,10 +45,9 @@ var igv = (function (igv) {
         this.maxRows = config.maxRows;
 
 
-        if (config.url && (config.url.toLowerCase().endsWith(".bigbed") || config.url.toLowerCase().endsWith(".bb"))) {
+        if ( config.url && filenameOrURLHasSuffix(config.url, '.bigbed') || filenameOrURLHasSuffix(config.url, '.bb') ) {
             this.featureSource = new igv.BWSource(config);
-        }
-        else {
+        } else {
             this.featureSource = new igv.FeatureSource(config);
         }
 
@@ -59,18 +58,21 @@ var igv = (function (igv) {
             this.render = renderVariant;
             this.homvarColor = "rgb(17,248,254)";
             this.hetvarColor = "rgb(34,12,253)";
-        }
-        else if ("FusionJuncSpan" === config.type) {
+        } else if ("FusionJuncSpan" === config.type) {
             this.render = renderFusionJuncSpan;
             this.height = config.height || 50;
             this.autoHeight = false;
-        }
-        else {
+        } else {
             this.render = renderFeature;
             this.arrowSpacing = 30;
 
             // adjust label positions to make sure they're always visible
             monitorTrackDrag(this);
+        }
+
+        function filenameOrURLHasSuffix (fileOrURL, suffix) {
+            var str = (igv.isFilePath(fileOrURL)) ? fileOrURL.name : fileOrURL;
+            return str.toLowerCase().endsWith( suffix )
         }
     };
 
