@@ -289,24 +289,6 @@
         </div>
 
         <div onclick="igv.browser.loadTrack({
-                            url: 'http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeUwRepliSeq/wgEncodeUwRepliSeqSknshValleysRep1.bed.gz',
-                            name: 'BED - Bad URL'
-                        })"> BED - Bad URL
-        </div>
-
-        <div onclick="igv.browser.loadTrack({
-                            url: '../test/data/bed/wgEncodeUwRepliSeqSknshValleysRep1.bed.gz',
-                            name: 'BED - Bad Local File - dot gz'
-                        })"> BED - Bad Local File (.gz)
-        </div>
-
-        <div onclick="igv.browser.loadTrack({
-                            url: '../test/data/bed/wgEncodeUwRepliSeqSknshValleysRep1.bed',
-                            name: 'BED - Bad Local File'
-                        })"> BED - Bad Local File
-        </div>
-
-        <div onclick="igv.browser.loadTrack({
                             url: '../test/data/bed/brokenbed/broken_bed.bed.gz',
                             indexURL: '../test/data/bed/brokenbed/broken_bed.bed.gz.tbi',
                             name: 'broken bed tabix'
@@ -341,6 +323,15 @@
             indexed: false,
             searchable: true
         })">EGFR bed (searchable: true)
+        </div>
+
+        <div onclick="igv.browser.loadTrack({
+            url: '../test/data/bed/egfr_hg38.bed.gz',
+            name: 'egfr',
+            format: 'bed',
+            indexed: false,
+            searchable: true
+        })">EGFR bed (.gz) (searchable: true)
         </div>
 
         <div onclick="igv.browser.loadTrack({

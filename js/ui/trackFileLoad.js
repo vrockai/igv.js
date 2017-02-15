@@ -143,28 +143,40 @@ var igv = (function (igv) {
         $input = $drag_and_drop.find( 'input[type="file"]' );
         $input.on( 'change', function( e ) {
 
+            var obj;
             droppedFile = _.first(e.target.files);
 
             // presentFileName(droppedFile);
 
             dismissDragAndDrop(self);
-            igv.browser.loadTracksWithConfigList( [ { url: droppedFile } ] );
+
+            // obj = { url: droppedFile };
+            obj = {
+                url: droppedFile,
+                name: 'egfr',
+                format: 'bed',
+                indexed: false,
+                searchable: true
+            };
+
+            // igv.browser.loadTracksWithConfigList( [ { url: droppedFile } ] );
+            igv.browser.loadTrack( obj );
 
         });
 
-        this.$button.on( 'click', function( e ) {
-
-            dismissDragAndDrop(self);
-            igv.browser.loadTracksWithConfigList( [ { url: droppedFile } ] );
-
-        });
+        // this.$button.on( 'click', function( e ) {
+        //
+        //     dismissDragAndDrop(self);
+        //     // igv.browser.loadTracksWithConfigList( [ { url: droppedFile } ] );
+        //     igv.browser.loadTrack( { url: droppedFile } );
+        // });
 
         this.$url_input.on( 'change', function( e ) {
             var value = $(this).val();
 
             dismissDragAndDrop(self);
-            igv.browser.loadTracksWithConfigList( [ { url: value } ] );
-
+            // igv.browser.loadTracksWithConfigList( [ { url: value } ] );
+            igv.browser.loadTrack( { url: value } );
         });
 
         $drag_and_drop
@@ -184,8 +196,8 @@ var igv = (function (igv) {
                 // presentFileName(droppedFile);
 
                 dismissDragAndDrop(self);
-                igv.browser.loadTracksWithConfigList( [ { url: droppedFile } ] );
-
+                // igv.browser.loadTracksWithConfigList( [ { url: droppedFile } ] );
+                igv.browser.loadTrack( { url: droppedFile } );
             });
 
 
