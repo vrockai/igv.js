@@ -143,31 +143,28 @@ var igv = (function (igv) {
         $input = $drag_and_drop.find( 'input[type="file"]' );
         $input.on( 'change', function( e ) {
 
-            var obj;
+            var filename,
+                extension;
+
             droppedFile = _.first(e.target.files);
+            filename = droppedFile.name;
+            extension = igv.Browser.getExtension({ url: droppedFile });
 
             // presentFileName(droppedFile);
 
             dismissDragAndDrop(self);
 
-            // obj = { url: droppedFile };
-            obj = {
-                url: droppedFile,
-                name: 'egfr',
-                format: 'bed',
-                indexed: false,
-                searchable: true
-            };
+            if ('bam' === extension) {
+                return;
+            }
 
-            // igv.browser.loadTracksWithConfigList( [ { url: droppedFile } ] );
-            igv.browser.loadTrack( obj );
+            igv.browser.loadTrack( { url: droppedFile } );
 
         });
 
         // this.$button.on( 'click', function( e ) {
         //
         //     dismissDragAndDrop(self);
-        //     // igv.browser.loadTracksWithConfigList( [ { url: droppedFile } ] );
         //     igv.browser.loadTrack( { url: droppedFile } );
         // });
 
@@ -175,7 +172,6 @@ var igv = (function (igv) {
             var value = $(this).val();
 
             dismissDragAndDrop(self);
-            // igv.browser.loadTracksWithConfigList( [ { url: value } ] );
             igv.browser.loadTrack( { url: value } );
         });
 
@@ -191,12 +187,20 @@ var igv = (function (igv) {
                 $drag_and_drop.removeClass( 'is-dragover' );
             })
             .on( 'drop', function( e ) {
+                var filename,
+                    extension;
                 droppedFile = _.first(e.originalEvent.dataTransfer.files);
+                filename = droppedFile.name;
+                extension = igv.Browser.getExtension({ url: droppedFile });
 
                 // presentFileName(droppedFile);
 
                 dismissDragAndDrop(self);
-                // igv.browser.loadTracksWithConfigList( [ { url: droppedFile } ] );
+
+                if ('bam' === extension) {
+                    return;
+                }
+
                 igv.browser.loadTrack( { url: droppedFile } );
             });
 

@@ -25,9 +25,6 @@
 
 var igv = (function (igv) {
 
-    var knownFileExtensions = new Set(["narrowpeak", "broadpeak", "peaks", "bedgraph", "wig", "gff3", "gff",
-        "gtf", "aneu", "fusionjuncspan", "refflat", "seg", "bed", "vcf", "bb", "bigbed", "bw", "bigwig", "bam", "tdf"]);
-
     igv.Browser = function (options, trackContainerDiv) {
 
         this.config = options;
@@ -89,6 +86,48 @@ var igv = (function (igv) {
 
 
 
+    };
+
+    igv.Browser.knownFileExtensions = new Set(["narrowpeak", "broadpeak", "peaks", "bedgraph", "wig", "gff3", "gff",
+        "gtf", "aneu", "fusionjuncspan", "refflat", "seg", "bed", "vcf", "bb", "bigbed", "bw", "bigwig", "bam", "tdf"]);
+
+    igv.Browser.hasKnownFileExtension = function (config) {
+        var extension = igv.Browser.getExtension(config);
+
+        if (undefined === extension) {
+            return false;
+        }
+        return igv.Browser.knownFileExtensions.has(extension);
+    };
+
+    igv.Browser.getExtension = function (config) {
+        var path,
+            filename,
+            index;
+
+        if (undefined === config.url) {
+            return undefined;
+        }
+
+        path = igv.isFilePath(config.url) ? config.url.name : config.url;
+        filename = path.toLowerCase();
+
+        //Strip parameters -- handle local files later
+        index = filename.indexOf("?");
+        if (index > 0) {
+            filename = filename.substr(0, index);
+        }
+
+        //Strip aux extensions .gz, .tab, and .txt
+        if (filename.endsWith(".gz")) {
+            filename = filename.substr(0, filename.length - 3);
+        } else if (filename.endsWith(".txt") || filename.endsWith(".tab")) {
+            filename = filename.substr(0, filename.length - 4);
+        }
+
+        index = filename.lastIndexOf(".");
+
+        return index < 0 ? filename : filename.substr(1 + index);
     };
 
     function initialize(options) {
@@ -211,8 +250,7 @@ var igv = (function (igv) {
             settings,
             property,
             newTrack,
-            featureSource,
-            nm;
+            featureSource;
 
         inferTypes(config);
 
@@ -344,37 +382,16 @@ var igv = (function (igv) {
 
             function inferFileFormat(config) {
 
-                var path,
-                    fn,
-                    idx,
-                    ext;
+                var extension;
 
                 if (config.format) {
                     config.format = config.format.toLowerCase();
                     return;
                 }
 
-                path = igv.isFilePath(config.url) ? config.url.name : config.url;
-                fn = path.toLowerCase();
+                extension = igv.Browser.getExtension(config);
 
-                //Strip parameters -- handle local files later
-                idx = fn.indexOf("?");
-                if (idx > 0) {
-                    fn = fn.substr(0, idx);
-                }
-
-                //Strip aux extensions .gz, .tab, and .txt
-                if (fn.endsWith(".gz")) {
-                    fn = fn.substr(0, fn.length - 3);
-                } else if (fn.endsWith(".txt") || fn.endsWith(".tab")) {
-                    fn = fn.substr(0, fn.length - 4);
-                }
-
-
-                idx = fn.lastIndexOf(".");
-                ext = idx < 0 ? fn : fn.substr(idx + 1);
-
-                switch (ext.toLowerCase()) {
+                switch (extension.toLowerCase()) {
 
                     case "bw":
                         config.format = "bigwig";
@@ -383,8 +400,8 @@ var igv = (function (igv) {
                         config.format = "bigbed";
 
                     default:
-                        if (knownFileExtensions.has(ext)) {
-                            config.format = ext;
+                        if (igv.Browser.knownFileExtensions.has(extension)) {
+                            config.format = extension;
                         }
                 }
             }
