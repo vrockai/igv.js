@@ -38,7 +38,9 @@ var igv = (function (igv) {
             $fa,
             $input,
             $url_input_container,
-            $e;
+            $e,
+            $ee,
+            $eee;
 
         // file load icon
         $fa_container = $('<div class="fa-container">');
@@ -85,16 +87,19 @@ var igv = (function (igv) {
         this.$url_input = $('<input class="igv-drag-and-drop-url-input" placeholder="enter track URL">');
         $url_input_container.append($e);
         $url_input_container.append(this.$url_input);
-
         $box.append($url_input_container);
+
+        this.$warning = warningHandler();
+        $box.append(this.$warning);
+        this.$warning.hide();
 
         this.$container = $('<div class="igv-drag-and-drop-container">');
 
         this.$container.append($box);
 
-        this.$container.append( closeHandler() );
+        this.$container.append( dismissDragAndDropHandler() );
 
-        function closeHandler() {
+        function dismissDragAndDropHandler() {
 
             var $container = $('<div class="igv-drag-and-drop-close-container">'),
                 $fa = $('<i class="fa fa-times igv-drag-and-drop-close-fa">');
@@ -129,6 +134,28 @@ var igv = (function (igv) {
             return $container;
         }
 
+        function warningHandler () {
+            var $warning,
+                $e,
+                $fa;
+
+            // warning
+            $warning = $('<div class="igv-drag-and-drop-warning">');
+            $warning.text('ERROR: LOCAL BAM FILE LOADING NOT SUPPORTED');
+
+            $e = $('<div class="igv-drag-and-drop-warning-close-container">');
+            $fa = $('<i class="fa fa-times-circle igv-drag-and-drop-warning-close-fa">');
+
+            $fa.on('click', function () {
+                $warning.hide();
+            });
+
+            $e.append($fa);
+            $warning.append($e);
+
+            return $warning;
+        }
+
     };
 
     igv.TrackFileLoad.prototype.initializationHelper = function () {
@@ -152,11 +179,12 @@ var igv = (function (igv) {
 
             // presentFileName(droppedFile);
 
-            dismissDragAndDrop(self);
-
             if ('bam' === extension) {
+                self.$warning.show();
                 return;
             }
+
+            dismissDragAndDrop(self);
 
             igv.browser.loadTrack( { url: droppedFile } );
 
@@ -195,11 +223,12 @@ var igv = (function (igv) {
 
                 // presentFileName(droppedFile);
 
-                dismissDragAndDrop(self);
-
                 if ('bam' === extension) {
+                    self.$warning.show();
                     return;
                 }
+
+                dismissDragAndDrop(self);
 
                 igv.browser.loadTrack( { url: droppedFile } );
             });

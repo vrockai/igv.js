@@ -67,13 +67,52 @@
     font-size: 20px;
     font-weight: 200;
 
-	padding: 100px 20px;
+    padding: 100px 20px;
 
-	outline: 2px dashed #92b0b3;
+    outline: 2px dashed #92b0b3;
 
-	outline-offset: -10px;
+    outline-offset: -10px;
 
     background-color: #c8dadf;
+}
+
+.igv-drag-and-drop-warning {
+    position: relative;
+
+    width: 100%;
+
+    color: red;
+
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+
+    margin-top: 32px;
+
+    /*background-color: white;*/
+}
+
+
+.igv-drag-and-drop-warning-close-container {
+
+    position: absolute;
+    top: 1px;
+    right: 48px;
+
+    text-align: center;
+    line-height: 100%;
+
+    cursor: pointer;
+
+    color: red;
+
+}
+
+.igv-drag-and-drop-warning-close-container:hover {
+    color: #7f0000;
+}
+
+.igv-drag-and-drop-warning-close-fa {
 }
 
 .igv-drag-and-drop-url-input-container {
@@ -125,6 +164,10 @@
 .box__dragndrop,
 .box__icon {
 	display: none;
+}
+
+.igv-drag-and-drop-box button {
+    outline: none;
 }
 
 .igv-drag-and-drop-box .box__dragndrop {
