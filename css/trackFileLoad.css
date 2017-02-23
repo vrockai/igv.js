@@ -1,3 +1,4 @@
+
 .igv-drag-and-drop-presentation-button {
 
 	position: relative;
@@ -63,15 +64,12 @@
     position: relative;
 
     color: #36464b;
+
     font-family: 'Open Sans', sans-serif;
     font-size: 20px;
     font-weight: 200;
 
     padding: 100px 20px;
-
-    outline: 2px dashed #92b0b3;
-
-    outline-offset: -10px;
 
     background-color: #c8dadf;
 }
@@ -133,6 +131,7 @@
 	width: 100%;
 
 	color: #36464b;
+
 	font-family: 'Open Sans', sans-serif;
 	font-size: 20px;
 	font-weight: 200;
@@ -142,8 +141,6 @@
 	padding-left: 4px;
 
 	border: 0;
-	outline: 0;
-	/*border-bottom: 2px solid #92b0b3;*/
 	border-bottom: 2px solid #36464b;
 
 	background: transparent;
@@ -156,18 +153,12 @@
 }
 
 .igv-drag-and-drop-box.is-dragover {
-	outline-offset: -20px;
-	outline-color: #c8dadf;
 	background-color: #fff;
 }
 
 .box__dragndrop,
 .box__icon {
 	display: none;
-}
-
-.igv-drag-and-drop-box button {
-    outline: none;
 }
 
 .igv-drag-and-drop-box .box__dragndrop {
@@ -247,12 +238,6 @@
 .box__file:focus + label strong,
 .box__file.has-focus + label strong {
 	color: #39bfd3;
-}
-
-.js .box__file:focus + label,
-.js .box__file.has-focus + label {
-	outline: 1px dotted #000;
-	outline: -webkit-focus-ring-color auto 5px;
 }
 
 .no-js .box__file + label {
