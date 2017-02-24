@@ -117,20 +117,25 @@ var igv = (function (igv) {
 
         function warningHandler () {
             var $warning,
-                $e,
+                $e_fa,
+                $e_message,
                 $fa;
 
-            $fa = $('<i class="fa fa-times-circle igv-drag-and-drop-warning-close-fa">');
+            // message
+            $e_message = $('<div class="igv-drag-and-drop-warning-message">');
+            $e_message.text('ERROR: INDEXED FILE LOADING NOT SUPPORTED');
+
+            // font awesome close icon
+            $e_fa = $('<div class="igv-drag-and-drop-warning-close-container">');
+            $fa = $('<i class="fa fa-times-circle">');
             $fa.on('click', function () {
                 $warning.hide();
             });
+            $e_fa.append($fa);
 
-            $e = $('<div class="igv-drag-and-drop-warning-close-container">');
-            $e.append($fa);
-
-            $warning = $('<div class="igv-drag-and-drop-warning">');
-            $warning.text('ERROR: INDEXED FILE LOADING NOT SUPPORTED');
-            $warning.append($e);
+            $warning = $('<div class="igv-drag-and-drop-warning-container">');
+            $warning.append($e_message);
+            $warning.append($e_fa);
 
             // hidden initially
             $warning.hide();

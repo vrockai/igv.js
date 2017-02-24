@@ -72,44 +72,31 @@
     background-color: #c8dadf;
 }
 
-.igv-drag-and-drop-warning {
+.igv-drag-and-drop-warning-container {
     position: absolute;
-
     top: 272px;
-
-    width: 100%;
-
-    color: red;
-
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
     font-weight: 400;
 
     margin-top: 32px;
+}
 
-    /*background-color: white;*/
+.igv-drag-and-drop-warning-message {
+    color: red;
+    float: left;
+    padding-right: 2px;
 }
 
 .igv-drag-and-drop-warning-close-container {
-
-    position: absolute;
-    top: 1px;
-    right: 140px;
-
-    text-align: center;
-    line-height: 100%;
-
-    cursor: pointer;
-
     color: red;
-
+    float: left;
+    padding-left: 2px;
 }
 
 .igv-drag-and-drop-warning-close-container:hover {
+    cursor: pointer;
     color: #7f0000;
-}
-
-.igv-drag-and-drop-warning-close-fa {
 }
 
 .igv-drag-and-drop-url-input-container {
