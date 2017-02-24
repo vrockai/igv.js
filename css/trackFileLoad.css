@@ -75,7 +75,9 @@
 }
 
 .igv-drag-and-drop-warning {
-    position: relative;
+    position: absolute;
+
+    top: 272px;
 
     width: 100%;
 
@@ -94,7 +96,7 @@
 
     position: absolute;
     top: 1px;
-    right: 48px;
+    right: 140px;
 
     text-align: center;
     line-height: 100%;

@@ -73,7 +73,6 @@ var igv = (function (igv) {
 
         // warn when bad file is loaded
         this.$warning = warningHandler();
-        this.$warning.hide();
 
         $box = $('<div class="js igv-drag-and-drop-box">');
         $box.append($box_input);
@@ -136,6 +135,9 @@ var igv = (function (igv) {
 
             $e.append($fa);
             $warning.append($e);
+
+            // hidden initially
+            $warning.hide();
 
             return $warning;
         }
