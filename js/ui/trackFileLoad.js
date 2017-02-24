@@ -85,37 +85,34 @@ var igv = (function (igv) {
 
         function dismissDragAndDropHandler() {
 
-            var $container = $('<div class="igv-drag-and-drop-close-container">'),
-                $fa = $('<i class="fa fa-times igv-drag-and-drop-close-fa">');
+            var $container,
+                $fa;
 
-            $container.append($fa);
+            $fa = $('<i class="fa">');
+            fa_mouseout();
 
-            $fa.hover(
-                function () {
-                    $fa.removeClass("fa-times");
-                    $fa.addClass("fa-times-circle");
-
-                    $fa.css({
-                        "color": "#36464b"
-                    });
-                },
-
-                function () {
-                    $fa.removeClass("fa-times-circle");
-                    $fa.addClass("fa-times");
-
-                    $fa.css({
-                        "color": "#92b0b3"
-                    });
-
-                }
-            );
+            $fa.hover(fa_mousein, fa_mouseout);
 
             $fa.on('click', function () {
+                fa_mouseout();
                 dismissDragAndDrop(self);
             });
 
+            $container = $('<div class="igv-drag-and-drop-close-container">');
+            $container.append($fa);
+
+            function fa_mousein () {
+                $fa.removeClass('fa-times igv-drag-and-drop-close-fa-mouse-out');
+                $fa.addClass('fa-times-circle igv-drag-and-drop-close-fa-mouse-in');
+            }
+
+            function fa_mouseout () {
+                $fa.removeClass('fa-times-circle igv-drag-and-drop-close-fa-mouse-in');
+                $fa.addClass('fa-times igv-drag-and-drop-close-fa-mouse-out');
+            }
+
             return $container;
+
         }
 
         function warningHandler () {
@@ -123,17 +120,16 @@ var igv = (function (igv) {
                 $e,
                 $fa;
 
-            $warning = $('<div class="igv-drag-and-drop-warning">');
-            $warning.text('ERROR: LOCAL BAM FILE LOADING NOT SUPPORTED');
-
-            $e = $('<div class="igv-drag-and-drop-warning-close-container">');
             $fa = $('<i class="fa fa-times-circle igv-drag-and-drop-warning-close-fa">');
-
             $fa.on('click', function () {
                 $warning.hide();
             });
 
+            $e = $('<div class="igv-drag-and-drop-warning-close-container">');
             $e.append($fa);
+
+            $warning = $('<div class="igv-drag-and-drop-warning">');
+            $warning.text('ERROR: INDEXED FILE LOADING NOT SUPPORTED');
             $warning.append($e);
 
             // hidden initially
