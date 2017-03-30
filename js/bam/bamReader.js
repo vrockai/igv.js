@@ -99,6 +99,7 @@ var igv = (function (igv) {
 
                                         igvxhr.loadArrayBuffer(self.bamPath,
                                             {
+                                                oauthToken: (self.config && self.config.oauthToken) || undefined,
                                                 headers: self.config.headers,
                                                 range: range,
                                                 withCredentials: self.config.withCredentials
@@ -373,6 +374,7 @@ var igv = (function (igv) {
 
                 igvxhr.loadArrayBuffer(self.bamPath,
                     {
+                        oauthToken: (self.config && self.config.oauthToken) || undefined,
                         headers: self.config.headers,
 
                         range: {start: 0, size: len},

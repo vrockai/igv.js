@@ -25,6 +25,7 @@ var igv = (function (igv) {
             igvxhr
                 .loadArrayBuffer(indexURL,
                     {
+                        oauthToken: config.oauthToken || undefined,
                         headers: config.headers,
                         withCredentials: config.withCredentials
                     })
